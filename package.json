@@ -2,25 +2,86 @@
   "name": "universal-auth-plugin",
   "version": "1.0.0",
   "description": "A framework-agnostic, modular authentication and session management plugin",
-  "main": "dist/server.js",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./adapters/prisma": {
+      "types": "./dist/adapters/prisma.d.ts",
+      "import": "./dist/adapters/prisma.js",
+      "require": "./dist/adapters/prisma.cjs",
+      "default": "./dist/adapters/prisma.js"
+    },
+    "./transport/express": {
+      "types": "./dist/transport/express.d.ts",
+      "import": "./dist/transport/express.js",
+      "require": "./dist/transport/express.cjs",
+      "default": "./dist/transport/express.js"
+    },
+    "./adapters/oauth": {
+      "types": "./dist/adapters/oauth.d.ts",
+      "import": "./dist/adapters/oauth.js",
+      "require": "./dist/adapters/oauth.cjs",
+      "default": "./dist/adapters/oauth.js"
+    },
+    "./adapters/email": {
+      "types": "./dist/adapters/email.d.ts",
+      "import": "./dist/adapters/email.js",
+      "require": "./dist/adapters/email.cjs",
+      "default": "./dist/adapters/email.js"
+    }
+  },
+  "files": [
+    "dist",
+    "prisma/schema.prisma"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsup && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "test": "node --import tsx --test"
+    "test": "node --import tsx --test src/core/auth.test.ts src/core/oauth.test.ts src/transport/express.test.ts src/transport/oauth.test.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^1.8.3",
     "cookie-parser": "^1.4.7",
+    "jose": "^5.9.6",
+    "resend": "^6.38.0"
+  },
+  "peerDependencies": {
+    "@prisma/client": "^6.19.3",
     "express": "^4.21.2",
-    "jose": "^5.9.6"
+    "zod": "^4.6.7"
+  },
+  "peerDependenciesMeta": {
+    "@prisma/client": {
+      "optional": true
+    },
+    "express": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "@prisma/client": "^6.19.3",
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.0",
+    "express": "^4.22.3",
+    "prisma": "^6.19.3",
+    "tsup": "^9.0.0",
     "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "zod": "^4.6.7"
   },
   "engines": {
     "node": ">=20.0.0"

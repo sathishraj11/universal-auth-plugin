@@ -39,3 +39,34 @@ export interface VerificationToken {
   expiresAt: Date;
   createdAt: Date;
 }
+
+export type OrgRole = 'OWNER' | 'ADMIN' | 'MEMBER';
+
+export interface Organization {
+  id: string;
+  name: string;
+  slug: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface OrganizationMember {
+  id: string;
+  userId: string;
+  organizationId: string;
+  role: OrgRole;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface UserOrganization {
+  organization: Organization;
+  role: OrgRole;
+}
+
+export interface TenantAccessTokenPayload {
+  userId: string;
+  email: string;
+  orgId?: string;
+  role?: OrgRole;
+}

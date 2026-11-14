@@ -1,4 +1,14 @@
-import { User, Session, CreateUserDto, VerificationToken, TokenPurpose } from './types';
+import {
+  User,
+  Session,
+  CreateUserDto,
+  VerificationToken,
+  TokenPurpose,
+  Organization,
+  OrganizationMember,
+  OrgRole,
+  UserOrganization,
+} from './types';
 
 export interface StorageAdapter {
   // User Operations
@@ -20,4 +30,11 @@ export interface StorageAdapter {
   findVerificationToken(tokenHash: string, purpose: TokenPurpose): Promise<VerificationToken | null>;
   deleteVerificationToken(id: string): Promise<void>;
   deleteUserVerificationTokens(userId: string, purpose: TokenPurpose): Promise<void>;
+
+  // Organization and membership operations
+  createOrganization(name: string, ownerUserId: string): Promise<Organization>;
+  generateUniqueOrganizationSlug(name: string): Promise<string>;
+  addOrganizationMember(userId: string, organizationId: string, role: OrgRole): Promise<OrganizationMember>;
+  findOrganizationMember(userId: string, organizationId: string): Promise<OrganizationMember | null>;
+  findUserOrganizations(userId: string): Promise<UserOrganization[]>;
 }

@@ -1,6 +1,12 @@
 import * as argon2 from '@node-rs/argon2';
 import * as jose from 'jose';
 import { createHash, randomBytes } from 'crypto';
+import { OrgRole, TenantAccessTokenPayload } from './types';
+
+export interface TenantTokenClaims {
+  orgId: string;
+  role: OrgRole;
+}
 
 export class CryptoEngine {
   constructor(private jwtSecret: string) {}
@@ -22,21 +28,29 @@ export class CryptoEngine {
     }
   }
 
-  async generateAccessToken(userId: string, email: string, expiresIn: string = '15m'): Promise<string> {
+  async generateAccessToken(
+    userId: string,
+    email: string,
+    expiresIn: string = '15m',
+    tenant?: TenantTokenClaims
+  ): Promise<string> {
     const secretKey = new TextEncoder().encode(this.jwtSecret);
-    return await new jose.SignJWT({ sub: userId, email })
+    return await new jose.SignJWT({ sub: userId, email, ...tenant })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
       .setExpirationTime(expiresIn)
       .sign(secretKey);
   }
 
-  async verifyAccessToken(token: string): Promise<{ userId: string; email: string }> {
+  async verifyAccessToken(token: string): Promise<TenantAccessTokenPayload> {
     const secretKey = new TextEncoder().encode(this.jwtSecret);
     const { payload } = await jose.jwtVerify(token, secretKey);
+    const role = isOrgRole(payload.role) ? payload.role : undefined;
     return {
       userId: payload.sub as string,
       email: payload.email as string,
+      ...(typeof payload.orgId === 'string' ? { orgId: payload.orgId } : {}),
+      ...(role ? { role } : {}),
     };
   }
 
@@ -49,4 +63,8 @@ export class CryptoEngine {
   hashOpaqueToken(rawToken: string): string {
     return createHash('sha256').update(rawToken).digest('hex');
   }
+}
+
+function isOrgRole(role: unknown): role is OrgRole {
+  return role === 'OWNER' || role === 'ADMIN' || role === 'MEMBER';
 }

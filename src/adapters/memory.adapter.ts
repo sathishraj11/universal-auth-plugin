@@ -1,10 +1,22 @@
 import { StorageAdapter } from '../core/adapter.interface';
-import { CreateUserDto, Session, User, VerificationToken, TokenPurpose } from '../core/types';
+import {
+  CreateUserDto,
+  Session,
+  User,
+  VerificationToken,
+  TokenPurpose,
+  Organization,
+  OrganizationMember,
+  OrgRole,
+  UserOrganization,
+} from '../core/types';
 
 export class InMemoryAdapter implements StorageAdapter {
   private users: Map<string, User> = new Map();
   private sessions: Map<string, Session> = new Map();
   private tokens: Map<string, VerificationToken> = new Map();
+  private organizations: Map<string, Organization> = new Map();
+  private organizationMembers: Map<string, OrganizationMember> = new Map();
 
   async findUserById(id: string): Promise<User | null> {
     return this.users.get(id) || null;
@@ -104,5 +116,70 @@ export class InMemoryAdapter implements StorageAdapter {
         this.tokens.delete(hash);
       }
     }
+  }
+
+  async createOrganization(name: string, ownerUserId: string): Promise<Organization> {
+    if (!this.users.has(ownerUserId)) throw new Error('Organization owner does not exist.');
+    const now = new Date();
+    const organization: Organization = {
+      id: Math.random().toString(36).substring(2),
+      name,
+      slug: await this.generateUniqueOrganizationSlug(name),
+      createdAt: now,
+      updatedAt: now,
+    };
+    this.organizations.set(organization.id, organization);
+    await this.addOrganizationMember(ownerUserId, organization.id, 'OWNER');
+    return organization;
+  }
+
+  async generateUniqueOrganizationSlug(name: string): Promise<string> {
+    const baseSlug = name.normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '') || 'organization';
+    const existingSlugs = new Set([...this.organizations.values()].map(({ slug }) => slug));
+    let slug = baseSlug;
+    let suffix = 2;
+    while (existingSlugs.has(slug)) slug = `${baseSlug}-${suffix++}`;
+    return slug;
+  }
+
+  async addOrganizationMember(
+    userId: string,
+    organizationId: string,
+    role: OrgRole
+  ): Promise<OrganizationMember> {
+    if (!this.users.has(userId)) throw new Error('Organization member does not exist.');
+    if (!this.organizations.has(organizationId)) throw new Error('Organization does not exist.');
+    const key = `${userId}:${organizationId}`;
+    if (this.organizationMembers.has(key)) throw new Error('User is already a member of this organization.');
+
+    const now = new Date();
+    const member: OrganizationMember = {
+      id: Math.random().toString(36).substring(2),
+      userId,
+      organizationId,
+      role,
+      createdAt: now,
+      updatedAt: now,
+    };
+    this.organizationMembers.set(key, member);
+    return member;
+  }
+
+  async findOrganizationMember(userId: string, organizationId: string): Promise<OrganizationMember | null> {
+    return this.organizationMembers.get(`${userId}:${organizationId}`) ?? null;
+  }
+
+  async findUserOrganizations(userId: string): Promise<UserOrganization[]> {
+    const memberships: UserOrganization[] = [];
+    for (const member of this.organizationMembers.values()) {
+      if (member.userId !== userId) continue;
+      const organization = this.organizations.get(member.organizationId);
+      if (organization) memberships.push({ organization, role: member.role });
+    }
+    return memberships;
   }
 }
