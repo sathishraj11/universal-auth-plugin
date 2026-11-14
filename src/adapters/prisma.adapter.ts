@@ -1,4 +1,4 @@
-import { OrgRole as PrismaOrgRole, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { StorageAdapter } from '../core/adapter.interface';
 import {
   CreateUserDto,
@@ -13,7 +13,11 @@ import {
 } from '../core/types';
 
 export class PrismaAdapter implements StorageAdapter {
-  constructor(private readonly prisma: PrismaClient = new PrismaClient()) {}
+  private readonly prisma: PrismaClient;
+
+  constructor(prisma: object = new PrismaClient()) {
+    this.prisma = prisma as unknown as PrismaClient;
+  }
 
   async findUserById(id: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({ where: { id } });
@@ -104,7 +108,7 @@ export class PrismaAdapter implements StorageAdapter {
             data: {
               userId: ownerUserId,
               organizationId: organization.id,
-              role: PrismaOrgRole.OWNER,
+              role: 'OWNER' as never,
             },
           });
           return organization;
@@ -132,7 +136,7 @@ export class PrismaAdapter implements StorageAdapter {
     role: OrgRole
   ): Promise<OrganizationMember> {
     return this.prisma.organizationMember.create({
-      data: { userId, organizationId, role: role as PrismaOrgRole },
+      data: { userId, organizationId, role: role as never },
     });
   }
 
