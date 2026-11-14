@@ -1,2 +1,2 @@
-export * from './github.strategy';
-export * from './google.strategy';
+export * from './github.strategy.js';
+export * from './google.strategy.js';

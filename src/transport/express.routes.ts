@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { AuthService } from '../core/auth.service';
-import { CryptoEngine } from '../core/crypto';
-import { AuthError } from '../core/errors';
-import { InMemoryRateLimitStore, RateLimitStore, createAuthRateLimiter } from './rate-limiter';
+import { AuthService } from '../core/auth.service.js';
+import { CryptoEngine } from '../core/crypto.js';
+import { AuthError } from '../core/errors.js';
+import { InMemoryRateLimitStore, RateLimitStore, createAuthRateLimiter } from './rate-limiter.js';
 import {
   forgotPasswordBodySchema,
   loginBodySchema,
@@ -12,7 +12,7 @@ import {
   sendValidationError,
   validateRequest,
   verifyEmailBodySchema,
-} from './validation';
+} from './validation.js';
 
 export interface AuthRouterOptions {
   authService: AuthService;

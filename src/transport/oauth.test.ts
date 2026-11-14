@@ -4,13 +4,13 @@ import { AddressInfo } from 'node:net';
 import { test, TestContext } from 'node:test';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import { InMemoryAdapter } from '../adapters/memory.adapter';
-import { CryptoEngine } from '../core/crypto';
-import { AuthError } from '../core/errors';
-import { OAuthStrategy, OAuthUserProfile } from '../core/oauth.interface';
-import { OAuthService } from '../core/oauth.service';
-import { authErrorHandler } from './express.middleware';
-import { createOAuthRouter } from './oauth.middleware';
+import { InMemoryAdapter } from '../adapters/memory.adapter.js';
+import { CryptoEngine } from '../core/crypto.js';
+import { AuthError } from '../core/errors.js';
+import { OAuthStrategy, OAuthUserProfile } from '../core/oauth.interface.js';
+import { OAuthService } from '../core/oauth.service.js';
+import { authErrorHandler } from './express.middleware.js';
+import { createOAuthRouter } from './oauth.middleware.js';
 
 class StubOAuthStrategy implements OAuthStrategy {
   exchangedCodes: string[] = [];

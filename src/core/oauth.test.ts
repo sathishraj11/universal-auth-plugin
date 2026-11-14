@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { GitHubOAuthStrategy } from '../adapters/oauth/github.strategy';
-import { GoogleOAuthStrategy } from '../adapters/oauth/google.strategy';
-import { InMemoryAdapter } from '../adapters/memory.adapter';
-import { AuthError } from './errors';
-import { CryptoEngine } from './crypto';
-import { OAuthStrategy, OAuthUserProfile } from './oauth.interface';
-import { OAuthService } from './oauth.service';
+import { GitHubOAuthStrategy } from '../adapters/oauth/github.strategy.js';
+import { GoogleOAuthStrategy } from '../adapters/oauth/google.strategy.js';
+import { InMemoryAdapter } from '../adapters/memory.adapter.js';
+import { AuthError } from './errors.js';
+import { CryptoEngine } from './crypto.js';
+import { OAuthStrategy, OAuthUserProfile } from './oauth.interface.js';
+import { OAuthService } from './oauth.service.js';
 
 class StubOAuthStrategy implements OAuthStrategy {
   exchangedCodes: string[] = [];

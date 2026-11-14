@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { StorageAdapter } from '../core/adapter.interface';
-import { CryptoEngine } from '../core/crypto';
-import { OrgRole, TenantAccessTokenPayload } from '../core/types';
+import { StorageAdapter } from '../core/adapter.interface.js';
+import { CryptoEngine } from '../core/crypto.js';
+import { OrgRole, TenantAccessTokenPayload } from '../core/types.js';
 
 export interface TenantRequestContext {
   orgId: string;

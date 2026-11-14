@@ -48,6 +48,8 @@
   "scripts": {
     "build": "tsup && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "test": "node --import tsx --test src/core/auth.test.ts src/core/oauth.test.ts src/transport/express.test.ts src/transport/oauth.test.ts"
@@ -75,6 +77,7 @@
     }
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.12",
     "@prisma/client": "^6.19.3",
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^4.17.21",

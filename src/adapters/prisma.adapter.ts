@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { StorageAdapter } from '../core/adapter.interface';
+import { StorageAdapter } from '../core/adapter.interface.js';
 import {
   CreateUserDto,
   Session,
@@ -10,7 +10,7 @@ import {
   OrganizationMember,
   OrgRole,
   UserOrganization,
-} from '../core/types';
+} from '../core/types.js';
 
 export class PrismaAdapter implements StorageAdapter {
   private readonly prisma: PrismaClient;

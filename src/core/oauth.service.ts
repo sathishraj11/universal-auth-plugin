@@ -1,8 +1,8 @@
-import { StorageAdapter } from './adapter.interface';
-import { CryptoEngine } from './crypto';
-import { AuthError } from './errors';
-import { OAuthProviderName, OAuthStrategy } from './oauth.interface';
-import { AuthPluginConfig, User } from './types';
+import { StorageAdapter } from './adapter.interface.js';
+import { CryptoEngine } from './crypto.js';
+import { AuthError } from './errors.js';
+import { OAuthProviderName, OAuthStrategy } from './oauth.interface.js';
+import { AuthPluginConfig, User } from './types.js';
 
 export interface OAuthLoginResult {
   user: Pick<User, 'id' | 'email'>;

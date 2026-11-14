@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { EmailProvider } from '../core/email.interface';
+import { EmailProvider } from '../core/email.interface.js';
 
 export class ResendEmailProvider implements EmailProvider {
   private readonly resend: Resend;

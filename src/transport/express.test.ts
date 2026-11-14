@@ -1,21 +1,21 @@
-import { requireTenantRole } from './rbac.middleware';
+import { requireTenantRole } from './rbac.middleware.js';
 import assert from 'node:assert/strict';
 import { createServer, Server } from 'node:http';
 import { AddressInfo } from 'node:net';
 import { test, TestContext } from 'node:test';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import { InMemoryAdapter } from '../adapters/memory.adapter';
-import { AuthService } from '../core/auth.service';
-import { CryptoEngine } from '../core/crypto';
-import { EmailProvider } from '../core/email.interface';
-import { Session } from '../core/types';
-import { authErrorHandler, createAuthGuard, createAuthRouter } from './express.routes';
+import { InMemoryAdapter } from '../adapters/memory.adapter.js';
+import { AuthService } from '../core/auth.service.js';
+import { CryptoEngine } from '../core/crypto.js';
+import { EmailProvider } from '../core/email.interface.js';
+import { Session } from '../core/types.js';
+import { authErrorHandler, createAuthGuard, createAuthRouter } from './express.routes.js';
 import {
   AUTH_RATE_LIMIT_PRESETS,
   InMemoryRateLimitStore,
   RateLimitStore,
-} from './rate-limiter';
+} from './rate-limiter.js';
 
 class RecordingEmailProvider implements EmailProvider {
   verificationEmails: Array<{ email: string; token: string }> = [];

@@ -1,4 +1,4 @@
-import { EmailProvider } from '../core/email.interface';
+import { EmailProvider } from '../core/email.interface.js';
 
 export class ConsoleEmailProvider implements EmailProvider {
   async sendVerificationEmail(email: string, token: string): Promise<void> {

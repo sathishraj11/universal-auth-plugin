@@ -1,5 +1,5 @@
-import { OAuthStrategy, OAuthUserProfile } from '../../core/oauth.interface';
-import { bearerHeaders, exchangeOAuthCode, requestOAuthJson } from './oauth-http';
+import { OAuthStrategy, OAuthUserProfile } from '../../core/oauth.interface.js';
+import { bearerHeaders, exchangeOAuthCode, requestOAuthJson } from './oauth-http.js';
 
 export interface GitHubOAuthConfig {
   clientId: string;

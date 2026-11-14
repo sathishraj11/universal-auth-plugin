@@ -1,8 +1,8 @@
-import { StorageAdapter } from './adapter.interface';
-import { CryptoEngine } from './crypto';
-import { EmailProvider } from './email.interface';
-import { AuthError } from './errors';
-import { AuthPluginConfig, OrgRole, Organization, User, UserOrganization } from './types';
+import { StorageAdapter } from './adapter.interface.js';
+import { CryptoEngine } from './crypto.js';
+import { EmailProvider } from './email.interface.js';
+import { AuthError } from './errors.js';
+import { AuthPluginConfig, OrgRole, Organization, User, UserOrganization } from './types.js';
 
 export class AuthService {
   constructor(

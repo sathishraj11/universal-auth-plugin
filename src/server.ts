@@ -1,17 +1,17 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { ConsoleEmailProvider } from './adapters/console-email.provider';
-import { InMemoryAdapter } from './adapters/memory.adapter';
-import { GitHubOAuthStrategy } from './adapters/oauth/github.strategy';
-import { GoogleOAuthStrategy } from './adapters/oauth/google.strategy';
-import { ResendEmailProvider } from './adapters/resend-email.provider';
-import { CryptoEngine } from './core/crypto';
-import { AuthService } from './core/auth.service';
-import { EmailProvider } from './core/email.interface';
-import { OAuthStrategy } from './core/oauth.interface';
-import { OAuthService } from './core/oauth.service';
-import { createAuthRouter, createAuthGuard, authErrorHandler } from './transport/express.routes';
-import { createOAuthRouter } from './transport/oauth.middleware';
+import { ConsoleEmailProvider } from './adapters/console-email.provider.js';
+import { InMemoryAdapter } from './adapters/memory.adapter.js';
+import { GitHubOAuthStrategy } from './adapters/oauth/github.strategy.js';
+import { GoogleOAuthStrategy } from './adapters/oauth/google.strategy.js';
+import { ResendEmailProvider } from './adapters/resend-email.provider.js';
+import { CryptoEngine } from './core/crypto.js';
+import { AuthService } from './core/auth.service.js';
+import { EmailProvider } from './core/email.interface.js';
+import { OAuthStrategy } from './core/oauth.interface.js';
+import { OAuthService } from './core/oauth.service.js';
+import { createAuthRouter, createAuthGuard, authErrorHandler } from './transport/express.routes.js';
+import { createOAuthRouter } from './transport/oauth.middleware.js';
 
 function createEmailProvider(): EmailProvider {
   const apiKey = process.env.RESEND_API_KEY;

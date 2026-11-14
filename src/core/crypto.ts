@@ -1,7 +1,7 @@
 import * as argon2 from '@node-rs/argon2';
 import * as jose from 'jose';
 import { createHash, randomBytes } from 'crypto';
-import { OrgRole, TenantAccessTokenPayload } from './types';
+import { OrgRole, TenantAccessTokenPayload } from './types.js';
 
 export interface TenantTokenClaims {
   orgId: string;

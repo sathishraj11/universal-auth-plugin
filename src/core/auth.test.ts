@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { InMemoryAdapter } from '../adapters/memory.adapter';
-import { AuthService } from './auth.service';
-import { CryptoEngine } from './crypto';
-import { EmailProvider } from './email.interface';
-import { AuthError } from './errors';
-import { Session } from './types';
+import { InMemoryAdapter } from '../adapters/memory.adapter.js';
+import { AuthService } from './auth.service.js';
+import { CryptoEngine } from './crypto.js';
+import { EmailProvider } from './email.interface.js';
+import { AuthError } from './errors.js';
+import { Session } from './types.js';
 
 class RecordingEmailProvider implements EmailProvider {
   verificationEmails: Array<{ email: string; token: string }> = [];

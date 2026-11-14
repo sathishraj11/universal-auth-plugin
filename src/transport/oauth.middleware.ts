@@ -1,8 +1,8 @@
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { NextFunction, Request, Response, Router } from 'express';
-import { AuthError } from '../core/errors';
-import { OAuthProviderName } from '../core/oauth.interface';
-import { OAuthService } from '../core/oauth.service';
+import { AuthError } from '../core/errors.js';
+import { OAuthProviderName } from '../core/oauth.interface.js';
+import { OAuthService } from '../core/oauth.service.js';
 
 export interface OAuthRouterOptions {
   oauthService: OAuthService;

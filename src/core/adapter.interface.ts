@@ -8,7 +8,7 @@ import {
   OrganizationMember,
   OrgRole,
   UserOrganization,
-} from './types';
+} from './types.js';
 
 export interface StorageAdapter {
   // User Operations

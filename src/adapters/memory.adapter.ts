@@ -1,4 +1,4 @@
-import { StorageAdapter } from '../core/adapter.interface';
+import { StorageAdapter } from '../core/adapter.interface.js';
 import {
   CreateUserDto,
   Session,
@@ -9,7 +9,7 @@ import {
   OrganizationMember,
   OrgRole,
   UserOrganization,
-} from '../core/types';
+} from '../core/types.js';
 
 export class InMemoryAdapter implements StorageAdapter {
   private users: Map<string, User> = new Map();
