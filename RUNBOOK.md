@@ -1,11 +1,11 @@
 # Client Implementation Runbook
 
-This runbook is for a Node.js 20+ Express application integrating `universal-auth-plugin`. Replace `@your-scope` with the npm scope under which the package is published.
+This runbook is for a Node.js 20+ Express application integrating the unscoped npm package `universal-auth-plugin`.
 
 ## 1. Install
 
 ```sh
-npm install @your-scope/universal-auth-plugin @prisma/client express zod cookie-parser
+npm install universal-auth-plugin @prisma/client express zod cookie-parser
 npm install --save-dev prisma
 ```
 
@@ -19,14 +19,14 @@ macOS/Linux:
 
 ```sh
 mkdir -p prisma
-cp node_modules/@your-scope/universal-auth-plugin/prisma/schema.prisma prisma/schema.prisma
+cp node_modules/universal-auth-plugin/prisma/schema.prisma prisma/schema.prisma
 ```
 
 PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force prisma | Out-Null
-Copy-Item node_modules/@your-scope/universal-auth-plugin/prisma/schema.prisma prisma/schema.prisma
+Copy-Item node_modules/universal-auth-plugin/prisma/schema.prisma prisma/schema.prisma
 ```
 
 Set `DATABASE_URL` in the application's environment, then apply and generate the schema:
@@ -61,19 +61,19 @@ import cookieParser from 'cookie-parser';
 import {
   AuthService,
   CryptoEngine,
-} from '@your-scope/universal-auth-plugin';
-import { PrismaAdapter } from '@your-scope/universal-auth-plugin/adapters/prisma';
+} from 'universal-auth-plugin';
+import { PrismaAdapter } from 'universal-auth-plugin/adapters/prisma';
 import {
   ConsoleEmailProvider,
   ResendEmailProvider,
-} from '@your-scope/universal-auth-plugin/adapters/email';
+} from 'universal-auth-plugin/adapters/email';
 import {
   authErrorHandler,
   createAuthGuard,
   createAuthRouter,
   InMemoryRateLimitStore,
   requireTenantRole,
-} from '@your-scope/universal-auth-plugin/transport/express';
+} from 'universal-auth-plugin/transport/express';
 
 function requiredEnv(name: string): string {
   const value = process.env[name];
@@ -82,7 +82,7 @@ function requiredEnv(name: string): string {
 }
 
 function refreshTtlDays(value: string): number {
-  const match = /^(\\d+)(m|h|d)$/.exec(value);
+  const match = /^(\d+)(m|h|d)$/.exec(value);
   if (!match) throw new Error('REFRESH_TOKEN_TTL must be an integer followed by m, h, or d.');
   const amount = Number(match[1]);
   if (amount < 1) throw new Error('REFRESH_TOKEN_TTL must be positive.');

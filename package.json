@@ -2,6 +2,9 @@
   "name": "universal-auth-plugin",
   "version": "1.0.0",
   "description": "A framework-agnostic, modular authentication and session management plugin",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

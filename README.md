@@ -12,23 +12,23 @@ A modular, hexagonal TypeScript authentication plugin. The core exposes framewor
 
 | Import | Contents | Optional peer dependencies |
 | --- | --- | --- |
-| `@your-scope/universal-auth-plugin` | Core services, types, configuration, and errors | None |
-| `@your-scope/universal-auth-plugin/adapters/prisma` | `PrismaAdapter` | `@prisma/client` |
-| `@your-scope/universal-auth-plugin/transport/express` | Express routers, validation, rate limiting, and `requireTenantRole` | `express`, `zod` |
-| `@your-scope/universal-auth-plugin/adapters/oauth` | Google and GitHub OAuth strategies | None |
-| `@your-scope/universal-auth-plugin/adapters/email` | Console and Resend email providers | None |
+| `universal-auth-plugin` | Core services, types, configuration, and errors | None |
+| `universal-auth-plugin/adapters/prisma` | `PrismaAdapter` | `@prisma/client` |
+| `universal-auth-plugin/transport/express` | Express routers, validation, rate limiting, and `requireTenantRole` | `express`, `zod` |
+| `universal-auth-plugin/adapters/oauth` | Google and GitHub OAuth strategies | None |
+| `universal-auth-plugin/adapters/email` | Console and Resend email providers | None |
 
 ## Quick Start
 
 ```sh
-npm install @your-scope/universal-auth-plugin @prisma/client express zod cookie-parser
+npm install universal-auth-plugin @prisma/client express zod cookie-parser
 npm install --save-dev prisma
 ```
 
 Copy and apply the included Prisma schema, then instantiate the adapter and mount the auth router:
 
 ```sh
-cp node_modules/@your-scope/universal-auth-plugin/prisma/schema.prisma prisma/schema.prisma
+cp node_modules/universal-auth-plugin/prisma/schema.prisma prisma/schema.prisma
 npx prisma db push
 npx prisma generate
 ```
@@ -36,9 +36,9 @@ npx prisma generate
 ```ts
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { AuthService, CryptoEngine } from '@your-scope/universal-auth-plugin';
-import { PrismaAdapter } from '@your-scope/universal-auth-plugin/adapters/prisma';
-import { createAuthRouter } from '@your-scope/universal-auth-plugin/transport/express';
+import { AuthService, CryptoEngine } from 'universal-auth-plugin';
+import { PrismaAdapter } from 'universal-auth-plugin/adapters/prisma';
+import { createAuthRouter } from 'universal-auth-plugin/transport/express';
 
 const storage = new PrismaAdapter();
 const crypto = new CryptoEngine(process.env.JWT_ACCESS_SECRET!);
